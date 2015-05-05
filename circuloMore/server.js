@@ -1,17 +1,13 @@
-
-
-
-
 window.onload = function() {
 	document.body.style.background = "#f3f3f3";
-	//var c = document.getElementById("myCanvas");
+	//Creacion del Canvas de dibujo
 	var canvas = document.createElement("canvas");
 	canvas.width = 800;
     canvas.height = 400;
     document.body.appendChild(canvas);
 		var ctx = canvas.getContext("2d");
 
-
+// funcion de inicializacion
 	var init = function(value, desplazamientosX, desplazamientosY){
 		value = value || 1;
 		desplazamientosX = desplazamientosX || 1;
