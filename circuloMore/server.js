@@ -1,30 +1,51 @@
+////////////////////////////////////////////////////////////////////////////////
+// 																			  //
+//							* Motor del Programa *							  //
+//						Creado por el Ing Mauricio Duque 					  //
+//			Maestria en Ingenieria Mecanica - Mecanica Computacional		  //
+//																			  //
+////////////////////////////////////////////////////////////////////////////////
+
+// Motor de renderizado que calcula y grafica los esfuerzos 3d, mediante el 
+// circulo Mohr, a partir de la solicitud de los tres esfuerzos, 
+// calcula los esfuerzos maximos y minimos al igual que el cortante maximo
+
+
+
+
+
+
 window.onload = function() {
 	document.body.style.background = "#f3f3f3";
 	//Creacion del Canvas de dibujo
 	var canvas = document.createElement("canvas");
+	//Crea las dimensiones del Canvas
 	canvas.width = 800;
     canvas.height = 400;
+    //Agrega el canvas al documento
     document.body.appendChild(canvas);
+    //Crea un contexto en 2D
 		var ctx = canvas.getContext("2d");
 
-// funcion de inicializacion
+// funcion de inicializacion y renderizacion
 	var init = function(value, desplazamientosX, desplazamientosY){
 		value = value || 1;
+
+		//Para mover el objeto en el canvas
 		desplazamientosX = desplazamientosX || 1;
 		desplazamientosY = desplazamientosY || 1;
 		console.log(Math.round(value * 10) / 10);
-
+		// Limpia el canvas en cada una de la graficacion
 		ctx.clearRect ( 0 , 0 , canvas.width, canvas.height );
-
+		//Ubica el centro de la pantalla
 		var desplazamientoX = desplazamientosX * (canvas.width / 2) ;
 		var desplazamientoY = desplazamientosY * (canvas.height / 2);
-
+		//declara los esfuerzos
 		var phi1 = value * text.esfuerzo_1;
 		var phi2 = value * text.esfuerzo_2;
 		var phi3 = value * text.esfuerzo_3;
 
-
-
+		//Calcula los centros de cada Circulo
 		var c1 = centro({s1 : phi1,
 				s2 : phi2});
 
@@ -43,16 +64,18 @@ window.onload = function() {
 		// Radio Grande 
 		var r3 = radio({R1 : phi1,
 				R2 : phi3});
+		// Agrego en un arreglo los radios y los centros
 		var rmat = [r1,r2,r3];
 		var cmat = [c1,c2,c3];
+
+		// Averigua el radio maximo y minimo del arreglo
 		var min = Math.min.apply(null, rmat),
     		max = Math.max.apply(null, rmat);
 
+    	// Encuentra el centro del radio maximo
     	var cmax = rmat.indexOf(max);
 
-    	console.log(cmax)
-    	console.log(max)
-		
+		// Encuentra el esfuerzo maximo y el esfuerzo minimo, al igual que cortante maximo		
 		var phi_max = 2 * max + 2 * min;
 		var phi_min = 2 * min;
 		var T_max = 1/2 * (phi_max - phi_min);
@@ -213,6 +236,7 @@ window.onload = function() {
 		return(phi_max);
 	};
 
+	// agrega las opciones de mando
 	var FizzyText = function() {
 	  this.esfuerzo_1 = 200;
 	  this.esfuerzo_2 = 100;
@@ -237,6 +261,7 @@ window.onload = function() {
 	  var controllerX = gui.add(text, 'maxSizeX', 0, 10);
 	  var controllerY = gui.add(text, 'maxSizeY', 0, 10);
 
+	// eventos de los mandos.
 	controller.onChange(function(value) {
 		  init(value,1,1);
 	});

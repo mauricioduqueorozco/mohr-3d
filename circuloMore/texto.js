@@ -1,3 +1,5 @@
+
+// Funcion que crea el texto
 var texto = function(datos, ctx){
 	ctx.beginPath();
 	ctx.font = "16px Georgia";
