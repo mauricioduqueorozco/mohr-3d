@@ -1,3 +1,5 @@
+
+//Funcion que crea circulos y puntos
 var circulo = function(datos, ctx){
 	
 	rad = (Math.PI/180)*360;

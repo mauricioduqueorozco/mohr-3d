@@ -1,3 +1,5 @@
+
+//Funcion que crea las lineas
 var linea = function(datos, ctx){
 	ctx.beginPath();
 	ctx.strokeStyle = datos.color; 
